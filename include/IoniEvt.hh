@@ -20,7 +20,7 @@ private:
 	std::vector<IoniClusterEvent*> *ioniEvent;
 public:
 	//construtor
-	IoniEvt(char * name);
+	IoniEvt();
 	~IoniEvt();
 	// this is the lowest level of the structur. This gives you information on particular recoreded interaction
 	IoniCluster* GetIoni(int n);

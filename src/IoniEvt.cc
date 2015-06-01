@@ -7,30 +7,25 @@
 #include "./IoniEvt.hh"
 #include <Event.hh>
 using namespace std;
-IoniEvt::IoniEvt(char * name)
+IoniEvt::IoniEvt()
 {
-	
-//	gSystem->Load("libEventLib.so");
-	file=new TFile();
+	cout<<"ok\n";	
+	file=new TFile("myout.root");
 	ioniEvent=new vector<IoniClusterEvent*>();
 	TTree * pg=GetTree();
 	int j=0;
-//	pg->GetEntry(j);
 	int byte=0;
 	do	
 	{
-	
 		IoniClusterEvent * i=new IoniClusterEvent();
 		pg->SetBranchAddress("ScIoni",& i);
 		byte=pg->GetEntry(j++);
 		if(byte!=0)
-		{
 			ioniEvent->push_back(i);
-		}
-	}
-	while(byte);
+	}while(byte);
 	numMax=j-2;
 	num=0;
+	file->Close();
 }
 
 IoniEvt::~IoniEvt()
