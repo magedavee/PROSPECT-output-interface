@@ -21,6 +21,7 @@ public:
 	SecondaryParticleVertex* GetVertex(int n);
 	//Return the top level of the event, gives you information about number of vertexs
 	SecondaryParticleEvent* GetParticleEvent();
+	SecondaryParticleEvent* GetParticleEvent(int n);
 	TTree* GetTree();
 	//returns the iterator 
 	TClonesArray* GetParticles();

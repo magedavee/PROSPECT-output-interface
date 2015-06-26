@@ -65,6 +65,11 @@ SecondaryParticleEvent* SecParticleEvt::GetParticleEvent()
 {
 	return particleEvent->at(num);
 }
+SecondaryParticleEvent* SecParticleEvt::GetParticleEvent(int n)
+{
+	this->SetNum(n);
+	return this->GetParticleEvent();
+}
 int SecParticleEvt::GetNum()
 {
 	return num;
