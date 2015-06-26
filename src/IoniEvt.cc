@@ -7,10 +7,10 @@
 #include "./IoniEvt.hh"
 #include <Event.hh>
 using namespace std;
-IoniEvt::IoniEvt()
+IoniEvt::IoniEvt(char *fname)
 {
 	cout<<"ok\n";	
-	file=new TFile("myout.root");
+	file=new TFile(fname);
 	ioniEvent=new vector<IoniClusterEvent*>();
 	TTree * pg=GetTree();
 	int j=0;

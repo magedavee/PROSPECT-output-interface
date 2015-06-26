@@ -9,7 +9,7 @@
 #include <vector>
 #include <TTree.h>
 #include <TClonesArray.h>
-#include </home/mage/PROSPECT/PROSPECT-G4/include/Output/Event.hh>
+#include </home/mage/PROSPECT/PROSPECT-G4-Sec/include/Output/Event.hh>
 class IoniEvt
 {
 private:
@@ -20,7 +20,7 @@ private:
 	std::vector<IoniClusterEvent*> *ioniEvent;
 public:
 	//construtor
-	IoniEvt();
+	IoniEvt(char * fname);
 	~IoniEvt();
 	// this is the lowest level of the structur. This gives you information on particular recoreded interaction
 	IoniCluster* GetIoni(int n);

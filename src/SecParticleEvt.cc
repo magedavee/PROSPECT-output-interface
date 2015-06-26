@@ -1,20 +1,20 @@
-#include <iostream>
-#include <string>
 #include <vector>
 #include <TFile.h>
 #include <TTree.h>
 #include <TClonesArray.h>
+#include <iostream>
 #include "SecParticleEvt.hh"
 
 #include <Event.hh>
 ClassImp(SecParticleEvt)
 using namespace std;
-SecParticleEvt::SecParticleEvt()
+SecParticleEvt::SecParticleEvt(char* fname)
 {
 	
 //	gSystem->Load("libEventLib.so");
         
-	file=new TFile("myout.root");
+	//file=new TFile("myout.root");
+	file=new TFile(fname);
 	particleEvent=new vector<SecondaryParticleEvent*>();
 	TTree * pg=GetTree();
 	int j=0;

@@ -6,7 +6,7 @@
 #include <TTree.h>
 #include <TClonesArray.h>
 #include <TObject.h>
-#include </home/mage/PROSPECT/PROSPECT-G4/include/Output/Event.hh>
+#include </home/mage/PROSPECT/PROSPECT-G4-Sec/include/Output/Event.hh>
 class SecParticleEvt:public TObject
 {
 private:
@@ -14,12 +14,15 @@ private:
 	int num, numMax;
 	std::vector<SecondaryParticleEvent*> *particleEvent;
 public:
-	SecParticleEvt();
+	SecParticleEvt(char* fname);
 	ClassDef(SecParticleEvt,1);
 	~SecParticleEvt();
+	//gives the information at vertex, this is lowest level of information
 	SecondaryParticleVertex* GetVertex(int n);
+	//Return the top level of the event, gives you information about number of vertexs
 	SecondaryParticleEvent* GetParticleEvent();
 	TTree* GetTree();
+	//returns the iterator 
 	TClonesArray* GetParticles();
 	void SetNum(int);
 	int GetNum();
