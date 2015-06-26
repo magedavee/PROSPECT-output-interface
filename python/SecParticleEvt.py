@@ -9,6 +9,7 @@ class SecParticleEvt:
 	 gROOT.ProcessLine(".L /home/mage/Local/lib/libSecParticleEvt.so")
 	 gROOT.ProcessLine(".L /home/mage/Local/include/SecParticleEvt.hh")
 	 self.sp=ROOT.SecParticleEvt(filename)
+	 self.vertex={"x":0,"y":0,"z":0,"px":0,"py":0,"pz":0,"vol":0,"E":0,"pid":0}
 
 ###############sets the event number###########################
     def setEvtNum(self,num):
@@ -23,7 +24,16 @@ class SecParticleEvt:
 
 ################Gets a vertex in this event####################
     def getVertex(self,num):
-	return self.sp.GetVertex(num)
+	vert= self.sp.GetVertex(num)
+	self.vertex["x"]=vert.x[0]
+	self.vertex["y"]=vert.x[1]
+	self.vertex["z"]=vert.x[2]
+	self.vertex["px"]=vert.p[0]
+	self.vertex["py"]=vert.p[1]
+	self.vertex["pz"]=vert.p[2]
+	self.vertex["vol"]=vert.vol
+	self.vertex["pid"]=vert.PID
+	return self.vertex
 
 ##############Get the total numeber of Event####################
     def getTotEvt(self):
@@ -49,5 +59,30 @@ class SecParticleEvt:
 	plt.title("Number of Particles detected")
 	plt.show()
 
+#############Shows hist of a vertext property for this event#####
+    def plotEvtProp(self,name):
+	total=self.getNumParticle()
+	num=[]
+	for i in xrange(0,total):
+	    vert=self.getVertex(i)
+	    num.append(vert[name])
+	plt.hist(num)
+	plt.ylabel("frequency")
+	plt.title("Event "+str(self.getEvtNum())+" "+name)
+	plt.show()
+#############Shows hist of a vertext property for this event#####
+    def plotTotProp(self,name):
+	num=[]
+	evt=self.getTotEvt()
+	for j in xrange(0,evt):
+	    self.setEvtNum(j)
+	    total=self.getNumParticle()
+	    for i in xrange(0,total):
+		vert=self.getVertex(i)
+		num.append(vert[name])
+	plt.hist(num)
+	plt.ylabel("frequency")
+	plt.title("total "+name)
+	plt.show()
 
-
+#################################################################
