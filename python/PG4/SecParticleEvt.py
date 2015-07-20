@@ -30,6 +30,11 @@ class SecParticleEvt:
 	self.vertex["pz"]=vert.p[2]
 	self.vertex["vol"]=vert.vol
 	self.vertex["pid"]=vert.PID
+	self.vertex["t"]=vert.t
+	self.vertex["E"]=vert.E
+	self.vertex["tid"]=vert.trackID
+	self.vertex["sid"]=vert.stepID
+	
 	return self.vertex
 
 ##############Get the total numeber of Event####################
@@ -57,18 +62,33 @@ class SecParticleEvt:
 	plt.show()
 
 #############Shows hist of a vertext property for this event#####
-    def plotEvtProp(self,name):
+    def plotEvtProp(self,name,bins=10):
 	total=self.getNumParticle()
 	num=[]
 	for i in xrange(0,total):
 	    vert=self.getVertex(i)
 	    num.append(vert[name])
-	plt.hist(num)
+	plt.hist(num,bins=bins)
 	plt.ylabel("frequency")
 	plt.title("Event "+str(self.getEvtNum())+" "+name)
 	plt.show()
+#############Shows hist of a vertext two property for this event#####
+    def plotEvt2Prop(self,nameX,nameY,bins=10):
+	total=self.getNumParticle()
+	numX=[]
+	numY=[]
+	for i in xrange(0,total):
+	    vert=self.getVertex(i)
+	    numX.append(vert[nameX])
+	    numY.append(vert[nameY])
+	plt.hist2d(numX,numY,bins=bins)
+	plt.xlabel(nameX)
+	plt.ylabel(nameY)
+	plt.title("Event "+str(self.getEvtNum())+" "+nameX+" vs "+nameY)
+	plt.colorbar()
+	plt.show()
 #############Shows hist of a vertext property for this event#####
-    def plotTotProp(self,name):
+    def plotTotProp(self,name,bins=10):
 	num=[]
 	evt=self.getTotEvt()
 	for j in xrange(0,evt):
@@ -77,7 +97,7 @@ class SecParticleEvt:
 	    for i in xrange(0,total):
 		vert=self.getVertex(i)
 		num.append(vert[name])
-	plt.hist(num)
+	plt.hist(num,bins=bins)
 	plt.ylabel("frequency")
 	plt.title("total "+name)
 	plt.show()

@@ -9,7 +9,6 @@
 using namespace std;
 IoniEvt::IoniEvt(char *fname)
 {
-	cout<<"ok\n";	
 	file=new TFile(fname);
 	ioniEvent=new vector<IoniClusterEvent*>();
 	TTree * pg=GetTree();

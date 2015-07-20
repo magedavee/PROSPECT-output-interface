@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 class IoniEvt:
     def __init__(self,filename):
 	self.sp=ROOT.IoniEvt(filename)
-	self.vertex={"x":0,"y":0,"z":0,"px":0,"py":0,"pz":0,"vol":0,"E":0,"pid":0,"l":0}
+	self.vertex={"x":0,"y":0,"z":0,"px":0,"py":0,"pz":0,"vol":0,"E":0,"pid":0,"l":0,"t":0}
 
 ###############sets the event number###########################
     def setEvtNum(self,num):
@@ -29,6 +29,8 @@ class IoniEvt:
 	self.vertex["pid"]=vert.PID
 	self.vertex["l"]=vert.l
 	self.vertex["E"]=vert.E
+	self.vertex["t"]=vert.t
+	self.vertex["dt"]=vert.dt
 	return self.vertex
 
 ##############Get the total numeber of Event####################
@@ -39,6 +41,9 @@ class IoniEvt:
     def getEvtNum(self):
 	return self.sp.GetNum()
 
+##############Get the current Event energy######################
+    def getEvtEnergy(self):
+	return self.sp.GetEIoni()
 ##############Get the number of detectec for current event######
     def getNumCluster(self):
 	return self.sp.GetIoniEvent().nIoniClusts

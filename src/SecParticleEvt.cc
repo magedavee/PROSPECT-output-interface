@@ -27,8 +27,6 @@ SecParticleEvt::SecParticleEvt(char* fname)
 		if(byte!=0)
 			particleEvent->push_back(i);	
 	}while(byte);
-	cout<<particleEvent->size()<<endl;
-	cout<<j<<endl;
 	numMax=j-2;
 	num=0;
 }
