@@ -33,6 +33,8 @@ SecParticleEvt::SecParticleEvt(char* fname)
 
 SecParticleEvt::~SecParticleEvt()
 {
+    delete this->file;
+    delete this->particleEvent;
 }
 
 TTree* SecParticleEvt::GetTree()

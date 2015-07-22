@@ -29,6 +29,8 @@ IoniEvt::IoniEvt(char *fname)
 
 IoniEvt::~IoniEvt()
 {
+    delete this->file;
+    delete this->ioniEvent;
 }
 
 TTree* IoniEvt::GetTree()
