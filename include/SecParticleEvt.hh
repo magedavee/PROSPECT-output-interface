@@ -11,8 +11,10 @@ class SecParticleEvt:public TObject
 {
 private:
 	TFile *file;
-	int num, numMax;
-	std::vector<SecondaryParticleEvent*> *particleEvent;
+	TTree * pg;
+	int num;
+	SecondaryParticleEvent * evtAddr;
+//	std::vector<SecondaryParticleEvent*> *particleEvent;
 public:
 	SecParticleEvt(char* fname);
 	ClassDef(SecParticleEvt,1);

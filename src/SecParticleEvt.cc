@@ -15,26 +15,29 @@ SecParticleEvt::SecParticleEvt(char* fname)
         
 	//file=new TFile("myout.root");
 	file=new TFile(fname);
-	particleEvent=new vector<SecondaryParticleEvent*>();
 	TTree * pg=GetTree();
 	int j=0;
-	int byte=0; 	
-	do
-	{
-		SecondaryParticleEvent * i=new SecondaryParticleEvent();
-		pg->SetBranchAddress("SecParticle",& i);
-		byte=pg->GetEntry(j++);
-		if(byte!=0)
-			particleEvent->push_back(i);	
-	}while(byte);
-	numMax=j-2;
+	int byte=0; 
+	evtAddr=new SecondaryParticleEvent();
+	pg->SetBranchAddress("SecParticle",& evtAddr);
+	//do
+	//{
+		//SecondaryParticleEvent * i=new SecondaryParticleEvent();
+		//pg->SetBranchAddress("SecParticle",& i);
+		//byte=pg->GetEntry(j++);
+		//if(byte!=0)
+			//particleEvent->push_back(i);	
+	//}while(byte);
+//	numMax=j-2;
 	num=0;
 }
 
 SecParticleEvt::~SecParticleEvt()
 {
+    delete this->evtAddr;
+    file->Close();
     delete this->file;
-    delete this->particleEvent;
+    delete this->pg;
 }
 
 TTree* SecParticleEvt::GetTree()
@@ -63,7 +66,7 @@ SecondaryParticleVertex* SecParticleEvt::GetVertex(int n)
 
 SecondaryParticleEvent* SecParticleEvt::GetParticleEvent()
 {
-	return particleEvent->at(num);
+	return evtAddr;
 }
 SecondaryParticleEvent* SecParticleEvt::GetParticleEvent(int n)
 {
@@ -77,13 +80,16 @@ int SecParticleEvt::GetNum()
 
 int SecParticleEvt::GetNumMax()
 {
-	return numMax;
+	return pg->GetEntries();
 }
 
 void SecParticleEvt::SetNum(int n)
 {
-	if(n<numMax)
+	if(n<=GetNumMax())
+	{
 		num=n;
+		pg->GetEntry(n);
+	}
 	else
-		cout<<n<<"  is greater than numMax= "<<numMax<<endl;
+		cout<<n<<"  is greater than numMax= "<<GetNumMax()<<endl;
 }

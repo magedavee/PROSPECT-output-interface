@@ -14,10 +14,11 @@ class IoniEvt
 {
 private:
 	TFile *file;
-	int num, numMax;
+	IoniClusterEvent * evtAddr;
+	TTree * pg;
+	int num;
 	double time;
 	//This takes each event in the ScIoni branch an puts them in a vector
-	std::vector<IoniClusterEvent*> *ioniEvent;
 public:
 	//construtor
 	IoniEvt(char * fname);
