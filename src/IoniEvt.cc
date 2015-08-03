@@ -5,38 +5,39 @@
 #include <TTree.h>
 #include <TClonesArray.h>
 #include "./IoniEvt.hh"
-#include <Event.hh>
+#include </home/mage/PROSPECT/PROSPECT-G4-Sec/include/Output/Event.hh>
 using namespace std;
 IoniEvt::IoniEvt(char *fname)
 {
 	file=new TFile(fname);
-	ioniEvent=new vector<IoniClusterEvent*>();
-	TTree * pg=GetTree();
+	pg=GetTree();
 	int j=0;
 	int byte=0;
-	do	
-	{
-		IoniClusterEvent * i=new IoniClusterEvent();
-		pg->SetBranchAddress("ScIoni",& i);
-		byte=pg->GetEntry(j++);
-		if(byte!=0)
-			ioniEvent->push_back(i);
-	}while(byte);
-	numMax=j-2;
+	evtAddr=new IoniClusterEvent();
+	pg->SetBranchAddress("ScIoni",& evtAddr);
+
+
+	//do	
+	//{
+		//IoniClusterEvent * i=new IoniClusterEvent();
+		//pg->SetBranchAddress("ScIoni",& i);
+		//byte=pg->GetEntry(j++);
+		//if(byte!=0)
+			//ioniEvent->push_back(i);
+	//}while(byte);
 	num=0;
-	file->Close();
 }
 
 IoniEvt::~IoniEvt()
 {
+    delete this->evtAddr;
+    file->Close();
     delete this->file;
-    delete this->ioniEvent;
+    delete this->pg;
 }
 
 TTree* IoniEvt::GetTree()
 {
-	TTree* pg;
-	pg=(TTree*) file->Get("PG4");
 	return pg;
 }
 TClonesArray* IoniEvt::GetClusts()
@@ -58,13 +59,13 @@ IoniCluster* IoniEvt::GetIoni(int n)
 
 IoniClusterEvent* IoniEvt::GetIoniEvent()
 {
-	return ioniEvent->at(num);
+	return evtAddr;
 }
 
 IoniClusterEvent* IoniEvt::GetIoniEvent(int n)
 {
 	SetEventNum(n);
-	return ioniEvent->at(num);
+	return evtAddr;
 }
 int IoniEvt::GetNum()
 {
@@ -73,15 +74,18 @@ int IoniEvt::GetNum()
 
 int IoniEvt::GetNumMax()
 {
-	return numMax;
+	return pg->GetEntries();
 }
 
 void IoniEvt::SetEventNum(int n)
 {
-	if(n<=numMax)
+	if(n<=GetNumMax())
+	{
 		num=n;
+		pg->GetEntry(num);
+	}
 	else
-		cout<<n<<"  is greater than numMax= "<<numMax<<endl;
+		cout<<n<<"  is greater than numMax= "<<GetNumMax()<<endl;
 }
 double IoniEvt::GetTime()
 {
